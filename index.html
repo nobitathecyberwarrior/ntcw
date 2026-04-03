@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nobita The Cyber Warrior | Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Share Tech Mono', monospace;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        /* Matrix Background */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* Main Container */
+        .container {
+            background: rgba(0, 20, 0, 0.85);
+            border: 1px solid #0f0;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 700px;
+            width: 100%;
+            z-index: 1;
+            backdrop-filter: blur(5px);
+            margin-bottom: 30px;
+        }
+
+        /* Logo Profile */
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 2px solid #0f0;
+            box-shadow: 0 0 15px #0f0;
+            margin-bottom: 20px;
+            object-fit: cover;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 10px #0f0; }
+            50% { box-shadow: 0 0 25px #0f0, 0 0 40px #0f0; }
+            100% { box-shadow: 0 0 10px #0f0; }
+        }
+
+        /* Glitch Effect for Title */
+        .glitch {
+            font-size: 2.2em;
+            font-weight: bold;
+            text-transform: uppercase;
+            position: relative;
+            text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+                        -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+                         0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+            animation: glitch 500ms infinite;
+            margin-bottom: 5px;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 0.05em 0 0 rgba(255,0,0,0.75), -0.05em -0.025em 0 rgba(0,255,0,0.75), -0.025em 0.05em 0 rgba(0,0,255,0.75); }
+            14% { text-shadow: 0.05em 0 0 rgba(255,0,0,0.75), -0.05em -0.025em 0 rgba(0,255,0,0.75), -0.025em 0.05em 0 rgba(0,0,255,0.75); }
+            15% { text-shadow: -0.05em -0.025em 0 rgba(255,0,0,0.75), 0.025em 0.025em 0 rgba(0,255,0,0.75), -0.05em -0.05em 0 rgba(0,0,255,0.75); }
+            49% { text-shadow: -0.05em -0.025em 0 rgba(255,0,0,0.75), 0.025em 0.025em 0 rgba(0,255,0,0.75), -0.05em -0.05em 0 rgba(0,0,255,0.75); }
+            50% { text-shadow: 0.025em 0.05em 0 rgba(255,0,0,0.75), 0.05em 0 0 rgba(0,255,0,0.75), 0 -0.05em 0 rgba(0,0,255,0.75); }
+            99% { text-shadow: 0.025em 0.05em 0 rgba(255,0,0,0.75), 0.05em 0 0 rgba(0,255,0,0.75), 0 -0.05em 0 rgba(0,0,255,0.75); }
+            100% { text-shadow: -0.025em 0 0 rgba(255,0,0,0.75), -0.025em -0.025em 0 rgba(0,255,0,0.75), -0.025em -0.05em 0 rgba(0,0,255,0.75); }
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .founder-text {
+            font-size: 0.9em;
+            color: #888;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        /* Buttons */
+        .links-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 500px) {
+            .links-wrapper { grid-template-columns: 1fr; }
+        }
+
+        .cyber-btn {
+            display: inline-block;
+            padding: 12px 20px;
+            color: #0f0;
+            text-decoration: none;
+            border: 1px solid #0f0;
+            background: rgba(0, 255, 0, 0.05);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .cyber-btn:hover {
+            background: #0f0;
+            color: #000;
+            box-shadow: 0 0 15px #0f0, 0 0 30px #0f0;
+            font-weight: bold;
+        }
+
+        .cyber-btn::before {
+            content: '>';
+            margin-right: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .cyber-btn:hover::before {
+            opacity: 1;
+        }
+
+        /* Terminal Window for About Section */
+        .terminal-window {
+            background: rgba(0, 10, 0, 0.9);
+            border: 1px solid #33ff33;
+            border-radius: 5px;
+            max-width: 700px;
+            width: 100%;
+            text-align: left;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+            z-index: 1;
+            margin-bottom: 40px;
+        }
+
+        .terminal-header {
+            background: #0f0;
+            color: #000;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 0.9em;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .terminal-body {
+            padding: 20px;
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: #00ff00;
+        }
+
+        .terminal-body h3 {
+            color: #fff;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            border-bottom: 1px dashed #0f0;
+            display: inline-block;
+        }
+
+        .terminal-body p {
+            margin-bottom: 10px;
+            color: #cccccc;
+        }
+
+        .terminal-body ul {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+
+        .terminal-body li {
+            margin-bottom: 8px;
+            color: #aaa;
+        }
+
+        .terminal-body li::before {
+            content: "[+] ";
+            color: #0f0;
+            font-weight: bold;
+        }
+
+        .highlight {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 15px;
+            background-color: #0f0;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrix"></canvas>
+
+    <div class="container">
+        <img src="https://ntcwbd.top/logo.php" alt="NTCW Logo" class="profile-img">
+        
+        <div class="glitch" data-text="NTCW">Nobita The Cyber Warrior</div>
+        <p class="subtitle">Ensuring Cyber Space Security</p>
+        <p class="founder-text">Founded by Md Yousuf Ali</p>
+
+        <div class="links-wrapper">
+            <a href="https://ntcwbd.top" target="_blank" class="cyber-btn">Official Website</a>
+            <a href="https://www.facebook.com/profile.php?id=61577985425015" target="_blank" class="cyber-btn">Facebook Page</a>
+            <a href="https://t.me/nobitathecyberwarrior" target="_blank" class="cyber-btn">Telegram Channel</a>
+            <a href="https://t.me/ntcwbd" target="_blank" class="cyber-btn">Telegram Account</a>
+        </div>
+    </div>
+
+    <div class="terminal-window">
+        <div class="terminal-header">
+            <span>root@ntcw:~/about_us</span>
+            <span>- [X]</span>
+        </div>
+        <div class="terminal-body">
+            <p>root@ntcw:~$ cat NTCW_info.txt</p>
+            <br>
+            <h3>> SYSTEM_INITIALIZATION</h3>
+            <p>Founded on <span class="highlight">February 23, 2024</span>, by <span class="highlight">Md Yousuf Ali</span>, <strong>Nobita The Cyber Warrior (NTCW)</strong> — also known as NT Warrior — is an ideological and dedicated cybersecurity agency. We operate as a trusted defensive shield in the digital realm, committed to keeping the cyberspace safe, clean, and secure.</p>
+
+            <h3>> CORE_MISSIONS</h3>
+            <ul>
+                <li><span class="highlight">National Cyber Defense:</span> Securing digital assets, monitoring threats, and protecting the country's cyberspace from malicious attacks.</li>
+                <li><span class="highlight">Anti-Blasphemy Operations:</span> Building strong resistance against defamatory content and tracking individuals who spread religious hatred online.</li>
+                <li><span class="highlight">Eliminating Obscenity:</span> Enforcing a zero-tolerance policy against the distribution of explicit and immoral content across social media and the web.</li>
+            </ul>
+
+            <h3>> ACTIVE_OPERATIONS</h3>
+            <ul>
+                <li>Vulnerability Scanning & Continuous Threat Monitoring.</li>
+                <li>Advanced OSINT (Open-Source Intelligence) & Information Gathering.</li>
+                <li>Cyber Counter-Operations to dismantle malicious digital networks.</li>
+            </ul>
+
+            <h3>> OUR_VISION</h3>
+            <p>NTCW is more than a traditional cybersecurity team; we are an elite group of ethical digital warriors. By combining advanced technical expertise with strong moral values, we constantly fight to serve as a leading cyber defense force for the nation.</p>
+            
+            <br>
+            <p>root@ntcw:~$ <span class="cursor"></span></p>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Characters for the Matrix Rain
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+{}|:"<>?~`;';
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array.from({ length: columns }).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
+
+            drops.forEach((y, index) => {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                const x = index * fontSize;
+                ctx.fillText(text, x, y * fontSize);
+
+                if (y * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[index] = 0;
+                }
+                drops[index]++;
+            });
+        }
+
+        setInterval(drawMatrix, 50);
+
+        // Adjust canvas on window resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+  </html>
+  
