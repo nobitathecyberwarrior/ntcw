@@ -14,4 +14,4 @@ This is the official animated portfolio website for **Nobita The Cyber Warrior (
 * JavaScript (Vanilla)
 
 ## Live Demo
-এনটিসিডবলু.পাতা.বাংলা
+https://এনটিসিডবলু.পাতা.বাংলা
